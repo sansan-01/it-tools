@@ -8,19 +8,21 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -36,38 +38,11 @@ jobs:
       # --- 新增结束 ---
 
       - name: Get changelog
-        id: get_changelog
-        run: |
-          # This script will get the latest changelog from the CHANGELOG.md file
-          # and set it as an output
-          # Then, we can use it in the next step
-          # The format of the changelog is:
-          # ## [vX.X.X](link) (date)
-          # ...
-          # ## [vX.X.X](link) (date)
-          # ...
-          # We want to get the content between the first and second ##
-          # We can use sed to do that
-          # The sed command is:
-          # sed -n '/^## \[v/ { :a; n; /^## \[v/q; p; ba; }' CHANGELOG.md
-          # But we need to escape the special characters
-          # The escaped command is:
-          # sed -n '/^## \[v/ { :a; n; /^## \[v/q; p; ba; }' CHANGELOG.md
-          # Then, we need to remove the first line
-          # The command is:
-          # sed -n '/^## \[v/ { :a; n; /^## \[v/q; p; ba; }' CHANGELOG.md | tail -n +2
-          # Then, we need to set the output
-          # echo "changelog=$(sed -n '/^## \[v/ { :a; n; /^## \[v/q; p; ba; }' CHANGELOG.md | tail -n +2)" >> $GITHUB_OUTPUT
-          # We need to make it multiline
-          # See https://github.com/actions/runner/issues/476
-          # We will use EOF
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          sed -n '/^## \[v/,/^## \[v/p' CHANGELOG.md | sed '1d;$d' >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+        run: node scripts/getLatestChangelog.mjs > "$RUNNER_TEMP/release-notes.md"
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
         with:
-          body: ${{ steps.get_changelog.outputs.changelog }}
+          body_path: ${{ runner.temp }}/release-notes.md
           fail_on_unmatched_files: true
           # --- 这是修改过的部分 ---
           # 告诉 action 把我们打包的 release.zip 文件上传
