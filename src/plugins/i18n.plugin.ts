@@ -1,6 +1,5 @@
 import { createI18n } from 'vue-i18n';
 
-// @ts-expect-error: messages are generated dynamically by a plugin
 import messages from '@intlify/unplugin-vue-i18n/messages';
 
 // 自动检测浏览器语言的逻辑 (保留)
