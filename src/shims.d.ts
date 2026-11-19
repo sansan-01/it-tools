@@ -39,3 +39,7 @@ declare module 'pdf-signature-reader' {
 
   export default verifySignature;
 }
+declare module '@intlify/unplugin-vue-i18n/messages' {
+  const messages: any;
+  export default messages;
+}
