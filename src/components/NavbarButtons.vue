@@ -2,7 +2,6 @@
 import { NIcon } from 'naive-ui';
 import { ActivityHeartbeat, BrandGithub, Compass, Moon, Sun } from '@vicons/tabler';
 import { useStyleStore } from '@/stores/style.store';
-import { config } from '@/config';
 
 const styleStore = useStyleStore();
 const { t } = useI18n();
@@ -43,9 +42,9 @@ const { t } = useI18n();
         circle
         variant="text"
         :aria-label="t('home.toggleTheme')"
-        @click="styleStore.toggleTheme()"
+        @click="styleStore.toggleDark()"
       >
-        <NIcon size="25" :component="styleStore.isDark ? Sun : Moon" />
+        <NIcon size="25" :component="styleStore.isDarkTheme ? Sun : Moon" />
       </c-button>
     </c-tooltip>
 
@@ -54,7 +53,7 @@ const { t } = useI18n();
         circle
         variant="text"
         tag="a"
-        :href="config.links.github"
+        href="https://github.com/CorentinTh/it-tools"
         target="_blank"
         rel="noopener noreferrer"
         :aria-label="t('home.github')"

@@ -28,6 +28,9 @@ coverage
 *.sw?
 
 .env
+.env.*
+!.env.example
+/release.zip
 /test-results/
 /playwright-report/
 /playwright/.cache/

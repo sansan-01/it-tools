@@ -44,7 +44,7 @@ function updateSiteRuntime() {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    siteRuntimeElement.innerHTML = `本站已稳定运行: ${days} 天 ${hours} 小时 ${minutes} 分 ${seconds} 秒`;
+    siteRuntimeElement.textContent = `本站已稳定运行: ${days} 天 ${hours} 小时 ${minutes} 分 ${seconds} 秒`;
   }
 }
 
@@ -87,8 +87,8 @@ onUnmounted(() => {
         <footer class="footer">
           <div>
             &copy; {{ new Date().getFullYear() }} sansan | This site is based on
-            <a href="https://github.com/CorentinTh/it-tools" target="_blank" class="text-indigo-400 hover:underline">it-tools</a> by Corentin Thiercelin,
-            licensed under MIT.
+            <a href="https://github.com/CorentinTh/it-tools" target="_blank" rel="noopener" class="text-indigo-400 hover:underline">it-tools</a> by Corentin Thomasset,
+            licensed under GPLv3.
           </div>
           <div id="site-runtime" />
         </footer>
