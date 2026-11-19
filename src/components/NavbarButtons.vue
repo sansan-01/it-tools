@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NIcon } from 'naive-ui';
-import { ActivityHeartbeat, BrandGithub, Compass, Moon, Sun } from '@vicons/tabler';
+import { Activity, BrandGithub, Compass, Moon, Sun } from '@vicons/tabler';
 import { useStyleStore } from '@/stores/style.store';
 
 const styleStore = useStyleStore();
@@ -19,7 +19,7 @@ const { t } = useI18n();
         rel="noopener noreferrer"
         :aria-label="t('navbar.status_page')"
       >
-        <NIcon size="25" :component="ActivityHeartbeat" />
+        <NIcon size="25" :component="Activity" />
       </c-button>
     </c-tooltip>
 
